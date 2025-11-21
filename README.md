@@ -204,6 +204,12 @@ from(bucket: "carscanner_tagged")
 
 ---
 
+### Details zu meinem Setup
+
+* s. readme im Ordner "MySetup"
+
+--- 
+
 ### 🤝 Mitmachen & Feedback
 
 * Fragen, Ideen oder Verbesserungsvorschläge?
