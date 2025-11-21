@@ -1,0 +1,210 @@
+import "math"
+
+// =================== Parameter ===================
+scan_curr_days       = 45d
+scan_tstart_days     = 90d
+target_distance_km   = 600.0
+win                  = 5m
+odo_standstill_km    = 0.01
+battery_capacity_kWh = 72.6   // Brutto
+
+// =================== Feldnamen ===================
+soc_field     = "[BMS] State of Charge Display (%)"
+soh_field     = "[BMS] State of Health (%)"
+rem_bms_field = "[BMS] Remaining energy (Wh)"   // in kWh umrechnen
+carFilter = "${car}"
+ownershipFilter = "${ownership}"
+
+
+// =================== STEP1 — letzte SoC / SoH / BMS-Remaining ===================
+soc_last =
+  from(bucket:"carscanner_tagged")
+    |> range(start:-scan_curr_days)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field==soc_field)
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: 5m, fn:last, createEmpty:false)
+    |> keep(columns:["_time","_value"])
+    |> group(columns: [])
+    |> sort(columns: ["_time"], desc:true)
+    |> limit(n:1)
+    |> map(fn:(r)=>({ _time: now(), k:"1", metric:"soc_pct", value: float(v:r._value) }))
+
+soh_last =
+  from(bucket:"carscanner_tagged")
+    |> range(start:-scan_curr_days)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field==soh_field)
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: 5m, fn:last, createEmpty:false)
+    |> keep(columns:["_time","_value"])
+    |> group(columns: [])
+    |> sort(columns: ["_time"], desc:true)
+    |> limit(n:1)
+    |> map(fn:(r)=>({ _time: now(), k:"1", metric:"soh_pct", value: float(v:r._value) }))
+
+rem_bms_last =
+  from(bucket:"carscanner_tagged")
+    |> range(start:-scan_curr_days)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field==rem_bms_field)
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: 5m, fn:last, createEmpty:false)
+    |> keep(columns:["_time","_value"])
+    |> group(columns: [])
+    |> sort(columns: ["_time"], desc:true)
+    |> limit(n:1)
+    |> map(fn:(r)=>({ _time: now(), k:"1", metric:"remaining_kWh_bms", value: float(v:r._value) / 1000.0 }))
+
+step1 = union(tables:[soc_last, soh_last, rem_bms_last])
+
+// =================== STEP2 — Verbrauch aus 600-km-Block ===================
+curr =
+  from(bucket:"carscanner_tagged")
+    |> range(start:-scan_curr_days)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field=="[DASH] Odometer (km)")
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: 5m, fn: last, createEmpty:false)
+    |> keep(columns: ["_time","_value"])
+    |> sort(columns: ["_time"])
+    |> tail(n:1)
+
+curr_rec   = curr |> findRecord(fn:(key)=> true, idx:0)
+curr_odo   = float(v: curr_rec._value)
+target_odo = curr_odo - target_distance_km
+
+trow =
+  from(bucket:"carscanner_tagged")
+    |> range(start:-scan_tstart_days)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field=="[DASH] Odometer (km)")
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: 5m, fn: last, createEmpty:false)
+    |> keep(columns: ["_time","_value"])
+    |> sort(columns: ["_time"])
+    |> filter(fn:(r)=> float(v:r._value) >= target_odo)
+    |> limit(n:1)
+    |> findRecord(fn:(key)=> true, idx:0)
+
+t_start = trow._time
+
+odo_delta =
+  from(bucket:"carscanner_tagged")
+    |> range(start: t_start)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field=="[DASH] Odometer (km)")
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: win, fn: last, createEmpty:false)
+    |> difference(nonNegative: false)
+    |> map(fn:(r)=>({ _time: r._time, delta_odo_km: if exists r._value and r._value > 0.0 then float(v:r._value) else 0.0 }))
+
+dis_delta =
+  from(bucket:"carscanner_tagged")
+    |> range(start: t_start)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field=="[BMS] Cumulative Energy Discharged (kWh)")
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: win, fn: last, createEmpty:false)
+    |> difference(nonNegative: false)
+    |> map(fn:(r)=>({ _time: r._time, delta_dis_kWh: if exists r._value then float(v:r._value) else 0.0 }))
+
+chg_delta =
+  from(bucket:"carscanner_tagged")
+    |> range(start: t_start)
+    |> filter(fn:(r)=> r._measurement=="carscanner" and r._field=="[BMS] Cumulative Energy Charged (kWh)")
+    |> filter(fn: (r) => r.car == carFilter)
+    |> filter(fn: (r) => r.ownership == ownershipFilter)
+    |> aggregateWindow(every: win, fn: last, createEmpty:false)
+    |> difference(nonNegative: false)
+    |> map(fn:(r)=>({ _time: r._time, delta_chg_kWh: if exists r._value then float(v:r._value) else 0.0 }))
+
+j1 = join(tables:{a: odo_delta, b: dis_delta}, on: ["_time"], method: "inner")
+j2 = join(tables:{a: j1,       b: chg_delta}, on: ["_time"], method: "inner")
+
+d =
+  j2
+    |> map(fn:(r)=>({
+      _time: r._time,
+      delta_odo_km:  r.delta_odo_km,
+      delta_net_kWh: r.delta_dis_kWh - r.delta_chg_kWh
+    }))
+    |> filter(fn:(r)=> not( (r.delta_net_kWh < 0.0) and (r.delta_odo_km <= odo_standstill_km) ))
+
+cons_only =
+  d
+    |> reduce(
+        identity:{dist:0.0, energy:0.0},
+        fn:(r,accumulator)=>({
+          dist:   accumulator.dist   + r.delta_odo_km,
+          energy: accumulator.energy + r.delta_net_kWh
+        })
+      )
+    |> map(fn:(r)=>({
+      _time: now(),
+      k: "1",
+      metric: "consumption_kWh_100km",
+      value: if r.dist <= 0.0 then 0.0 else math.round(x: (r.energy / r.dist) * 100.0 * 100.0)/100.0
+    }))
+
+// =================== STEP3 — Pivot, Remaining(calc) & Reichweiten ===================
+safe =
+  union(tables:[step1, cons_only])
+    |> group(columns: [])
+    |> pivot(rowKey:["k"], columnKey:["metric"], valueColumn:"value")
+    |> map(fn:(r)=>({
+      _time: now(),
+      soc_pct:               if exists r.soc_pct               then float(v:r.soc_pct)               else 0.0,
+      soh_pct:               if exists r.soh_pct               then float(v:r.soh_pct)               else 0.0,
+      remaining_kWh_bms:     if exists r.remaining_kWh_bms     then float(v:r.remaining_kWh_bms)     else 0.0,
+      consumption_kWh_100km: if exists r.consumption_kWh_100km then float(v:r.consumption_kWh_100km) else 0.0
+    }))
+
+final_row =
+  safe
+    |> map(fn:(r)=>({
+      _time: r._time,
+      // Calculated Remaining = Kapazität * SoH * SoC
+      remaining_kWh_calc: (battery_capacity_kWh * (r.soh_pct/100.0)) * (r.soc_pct/100.0),
+      remaining_kWh_bms:  r.remaining_kWh_bms,
+      soc_pct:            r.soc_pct,
+      soh_pct:            r.soh_pct,
+      consumption_kWh_100km: r.consumption_kWh_100km
+    }))
+    |> map(fn:(r)=>({
+      _time: r._time,
+      consumption_kWh_100km: r.consumption_kWh_100km,
+      // Reichweite (calc) = Remaining(calc) / (Verbrauch/100)
+      range_km_est:
+        if r.consumption_kWh_100km <= 0.0 then 0.0
+        else math.round(x: (r.remaining_kWh_calc / (r.consumption_kWh_100km / 100.0)) * 10.0) / 10.0,
+      // Reichweite (BMS) = Remaining(BMS) / (Verbrauch/100)
+      range_km_est_bms:
+        if r.consumption_kWh_100km <= 0.0 then 0.0
+        else math.round(x: (r.remaining_kWh_bms  / (r.consumption_kWh_100km / 100.0)) * 10.0) / 10.0,
+      // Abweichung Remaining (kWh & %)
+      remaining_delta_kWh: r.remaining_kWh_calc - r.remaining_kWh_bms,
+      remaining_delta_pct: if r.remaining_kWh_calc > 0.0
+                           then ((r.remaining_kWh_bms / r.remaining_kWh_calc) - 1.0) * 100.0
+                           else 0.0,
+      remaining_kWh_calc: r.remaining_kWh_calc,
+      remaining_kWh_bms:  r.remaining_kWh_bms,
+      soc_pct:            r.soc_pct,
+      soh_pct:            r.soh_pct
+    }))
+    |> keep(columns:[
+      "consumption_kWh_100km",
+      "range_km_est",
+      "range_km_est_bms",
+      "remaining_kWh_calc",
+      "remaining_kWh_bms",
+      "remaining_delta_kWh",
+      "remaining_delta_pct",
+      "soc_pct",
+      "soh_pct",
+      "_time"
+    ])
+
+final_row 
+  |> drop(columns: ["range_km_est_bms","remaining_delta_kWh","remaining_delta_pct","remaining_kWh_calc"])
+  |> yield(name:"LEAN_600km_dashboard")
