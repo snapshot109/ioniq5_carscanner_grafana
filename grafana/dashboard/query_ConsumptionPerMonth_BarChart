@@ -1,0 +1,160 @@
+import "strings"
+import "regexp"
+import "date"
+
+bucketName = "carscanner_tagged"
+measurementName = "carscanner"
+carFilter = "${car}"
+ownershipFilter = "${ownership}"
+
+odometerField = "[DASH] Odometer (km)"
+dischargedField = "[BMS] Cumulative Energy Discharged (kWh)"
+chargedField = "[BMS] Cumulative Energy Charged (kWh)"
+
+odometer = from(bucket: bucketName)
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == measurementName)
+  |> filter(fn: (r) => r._field == odometerField)
+  |> filter(fn: (r) => exists r._value)
+  |> filter(fn: (r) => r.car == carFilter)
+  |> filter(fn: (r) => r.ownership == ownershipFilter)
+  |> group(columns: ["trip"])
+  |> sort(columns: ["_time"], desc: false)
+  |> reduce(
+    identity: {
+      trip: "",
+      odo_first: 0.0,
+      odo_last: 0.0,
+      trip_end_time: 1970-01-01T00:00:00Z
+    },
+    fn: (r, accumulator) => ({
+      trip: r.trip,
+      odo_first: if accumulator.odo_first == 0.0 then r._value else accumulator.odo_first,
+      odo_last: r._value,
+      trip_end_time: r._time
+    })
+  )
+  |> map(fn: (r) => ({
+    trip: r.trip,
+    odo_first: r.odo_first,
+    odo_last: r.odo_last,
+    distance_km: r.odo_last - r.odo_first,
+    trip_end_time: r.trip_end_time
+  }))
+
+discharged = from(bucket: bucketName)
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == measurementName)
+  |> filter(fn: (r) => r._field == dischargedField)
+  |> filter(fn: (r) => exists r._value)
+  |> filter(fn: (r) => r.ownership == ownershipFilter)
+  |> filter(fn: (r) => r.car == carFilter)
+  |> group(columns: ["trip"])
+  |> sort(columns: ["_time"], desc: false)
+  |> reduce(
+    identity: {
+      trip: "",
+      discharged_first: 0.0,
+      discharged_last: 0.0
+    },
+    fn: (r, accumulator) => ({
+      trip: r.trip,
+      discharged_first: if accumulator.discharged_first == 0.0 then r._value else accumulator.discharged_first,
+      discharged_last: r._value
+    })
+  )
+  |> map(fn: (r) => ({
+    trip: r.trip,
+    discharged_delta_kWh: r.discharged_last - r.discharged_first
+  }))
+
+charged = from(bucket: bucketName)
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == measurementName)
+  |> filter(fn: (r) => r._field == chargedField)
+  |> filter(fn: (r) => exists r._value)
+  |> filter(fn: (r) => r.ownership == ownershipFilter)
+  |> filter(fn: (r) => r.car == carFilter)
+  |> group(columns: ["trip"])
+  |> sort(columns: ["_time"], desc: false)
+  |> reduce(
+    identity: {
+      trip: "",
+      charged_first: 0.0,
+      charged_last: 0.0
+    },
+    fn: (r, accumulator) => ({
+      trip: r.trip,
+      charged_first: if accumulator.charged_first == 0.0 then r._value else accumulator.charged_first,
+      charged_last: r._value
+    })
+  )
+  |> map(fn: (r) => ({
+    trip: r.trip,
+    charged_delta_kWh: r.charged_last - r.charged_first
+  }))
+
+joinStep1 = join(
+  tables: {odo: odometer, dis: discharged},
+  on: ["trip"]
+)
+
+joinStep2 = join(
+  tables: {step1: joinStep1, chg: charged},
+  on: ["trip"]
+)
+
+// Trip-Verbrauch berechnen und dann pro Kalendermonat mitteln
+monthly = joinStep2
+  |> map(fn: (r) => {
+    netKwh = r.discharged_delta_kWh - r.charged_delta_kWh
+    consumption = if r.distance_km > 0.0 then (netKwh / r.distance_km) * 100.0 else 0.0
+
+    tripShort = strings.substring(v: r.trip, start: 5, end: 16)
+
+    return {
+      _time: r.trip_end_time,
+      _value: consumption,
+      trip: tripShort
+    }
+  })
+  |> filter(fn: (r) => r._value > 0.0)
+  // Jahr und Monat aus _time ziehen
+  |> map(fn: (r) => ({
+    r with
+    year:  date.year(t: r._time),
+    month: date.month(t: r._time)
+  }))
+  // pro Jahr+Monat zusammenfassen
+  |> group(columns: ["year", "month"])
+  |> reduce(
+    identity: {
+      year: 0,
+      month: 0,
+      sum: 0.0,
+      count: 0.0
+    },
+    fn: (r, accumulator) => ({
+      year:  r.year,
+      month: r.month,
+      sum:   accumulator.sum + r._value,
+      count: accumulator.count + 1.0
+    })
+  )
+  // Durchschnitt berechnen und _time auf den 1. des Monats setzen
+  |> map(fn: (r) => ({
+    _time: time(
+      v: string(v: r.year) +
+        "-" +
+        (if r.month < 10 then "0" + string(v: r.month) else string(v: r.month)) +
+        "-01T00:00:00Z"
+    ),
+    _value: r.sum / r.count
+  }))
+  // nur Zeit + Wert zurückgeben, keine Labels mehr
+  |> keep(columns: ["_time", "_value"])
+  // alles wieder zu **einer** Serie zusammenfassen
+  |> group()
+  |> sort(columns: ["_time"], desc: false)
+
+monthly
