@@ -1,0 +1,12 @@
+carFilter = "${car}"
+ownershipFilter = "${ownership}"
+
+from(bucket: "carscanner_tagged")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "carscanner")
+  |> filter(fn: (r) => r["_field"] == "[BMS] Battery Cell Voltage Deviation (V)")
+  |> filter(fn: (r) => r.car == carFilter)
+  |> filter(fn: (r) => r.ownership == ownershipFilter)
+  |> drop(columns: ["trip"])
+  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)
+  |> yield(name: "last")
