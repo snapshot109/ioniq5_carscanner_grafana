@@ -213,5 +213,5 @@ from(bucket: "carscanner_tagged")
 
 ### 📜 Lizenz
 
-MIT License
+The Unlicense
 
