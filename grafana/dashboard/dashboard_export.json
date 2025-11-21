@@ -1,0 +1,1306 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "consumption_kWh_100km"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Verbrauch letzte 600km"
+              },
+              {
+                "id": "unit",
+                "value": "kWh/ 100km"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "light-yellow",
+                      "value": 16
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 20
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 24
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "range_km_est"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Reichweite"
+              },
+              {
+                "id": "unit",
+                "value": "lengthkm"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": 0
+                    },
+                    {
+                      "color": "#E24D42",
+                      "value": 150
+                    },
+                    {
+                      "color": "#EF843C",
+                      "value": 200
+                    },
+                    {
+                      "color": "light-orange",
+                      "value": 250
+                    },
+                    {
+                      "color": "blue",
+                      "value": 300
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 350
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "remaining_kWh_bms"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Remaining energy (BMS)"
+              },
+              {
+                "id": "unit",
+                "value": "kwatth"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": 0
+                    },
+                    {
+                      "color": "light-red",
+                      "value": 15
+                    },
+                    {
+                      "color": "semi-dark-orange",
+                      "value": 25
+                    },
+                    {
+                      "color": "super-light-yellow",
+                      "value": 35
+                    },
+                    {
+                      "color": "semi-dark-yellow",
+                      "value": 45
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 54.9
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "soc_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "SoC"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 15
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": 25
+                    },
+                    {
+                      "color": "super-light-orange",
+                      "value": 35
+                    },
+                    {
+                      "color": "light-yellow",
+                      "value": 45
+                    },
+                    {
+                      "color": "super-light-blue",
+                      "value": 55
+                    },
+                    {
+                      "color": "super-light-green",
+                      "value": 65
+                    },
+                    {
+                      "color": "green",
+                      "value": 75
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 85
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "soh_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "SoH"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    },
+                    {
+                      "color": "semi-dark-orange",
+                      "value": 85
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 90
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 95
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 16,
+        "x": 0,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "import \"math\"\r\n\r\n// =================== Parameter ===================\r\nscan_curr_days       = 45d\r\nscan_tstart_days     = 90d\r\ntarget_distance_km   = 600.0\r\nwin                  = 5m\r\nodo_standstill_km    = 0.01\r\nbattery_capacity_kWh = 72.6   // Brutto\r\n\r\n// =================== Feldnamen ===================\r\nsoc_field     = \"[BMS] State of Charge Display (%)\"\r\nsoh_field     = \"[BMS] State of Health (%)\"\r\nrem_bms_field = \"[BMS] Remaining energy (Wh)\"   // in kWh umrechnen\r\ncarFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\n\r\n// =================== STEP1 — letzte SoC / SoH / BMS-Remaining ===================\r\nsoc_last =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start:-scan_curr_days)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==soc_field)\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: 5m, fn:last, createEmpty:false)\r\n    |> keep(columns:[\"_time\",\"_value\"])\r\n    |> group(columns: [])\r\n    |> sort(columns: [\"_time\"], desc:true)\r\n    |> limit(n:1)\r\n    |> map(fn:(r)=>({ _time: now(), k:\"1\", metric:\"soc_pct\", value: float(v:r._value) }))\r\n\r\nsoh_last =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start:-scan_curr_days)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==soh_field)\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: 5m, fn:last, createEmpty:false)\r\n    |> keep(columns:[\"_time\",\"_value\"])\r\n    |> group(columns: [])\r\n    |> sort(columns: [\"_time\"], desc:true)\r\n    |> limit(n:1)\r\n    |> map(fn:(r)=>({ _time: now(), k:\"1\", metric:\"soh_pct\", value: float(v:r._value) }))\r\n\r\nrem_bms_last =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start:-scan_curr_days)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==rem_bms_field)\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: 5m, fn:last, createEmpty:false)\r\n    |> keep(columns:[\"_time\",\"_value\"])\r\n    |> group(columns: [])\r\n    |> sort(columns: [\"_time\"], desc:true)\r\n    |> limit(n:1)\r\n    |> map(fn:(r)=>({ _time: now(), k:\"1\", metric:\"remaining_kWh_bms\", value: float(v:r._value) / 1000.0 }))\r\n\r\nstep1 = union(tables:[soc_last, soh_last, rem_bms_last])\r\n\r\n// =================== STEP2 — Verbrauch aus 600-km-Block ===================\r\ncurr =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start:-scan_curr_days)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==\"[DASH] Odometer (km)\")\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: 5m, fn: last, createEmpty:false)\r\n    |> keep(columns: [\"_time\",\"_value\"])\r\n    |> sort(columns: [\"_time\"])\r\n    |> tail(n:1)\r\n\r\ncurr_rec   = curr |> findRecord(fn:(key)=> true, idx:0)\r\ncurr_odo   = float(v: curr_rec._value)\r\ntarget_odo = curr_odo - target_distance_km\r\n\r\ntrow =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start:-scan_tstart_days)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==\"[DASH] Odometer (km)\")\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: 5m, fn: last, createEmpty:false)\r\n    |> keep(columns: [\"_time\",\"_value\"])\r\n    |> sort(columns: [\"_time\"])\r\n    |> filter(fn:(r)=> float(v:r._value) >= target_odo)\r\n    |> limit(n:1)\r\n    |> findRecord(fn:(key)=> true, idx:0)\r\n\r\nt_start = trow._time\r\n\r\nodo_delta =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start: t_start)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==\"[DASH] Odometer (km)\")\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: win, fn: last, createEmpty:false)\r\n    |> difference(nonNegative: false)\r\n    |> map(fn:(r)=>({ _time: r._time, delta_odo_km: if exists r._value and r._value > 0.0 then float(v:r._value) else 0.0 }))\r\n\r\ndis_delta =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start: t_start)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==\"[BMS] Cumulative Energy Discharged (kWh)\")\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: win, fn: last, createEmpty:false)\r\n    |> difference(nonNegative: false)\r\n    |> map(fn:(r)=>({ _time: r._time, delta_dis_kWh: if exists r._value then float(v:r._value) else 0.0 }))\r\n\r\nchg_delta =\r\n  from(bucket:\"carscanner_tagged\")\r\n    |> range(start: t_start)\r\n    |> filter(fn:(r)=> r._measurement==\"carscanner\" and r._field==\"[BMS] Cumulative Energy Charged (kWh)\")\r\n    |> filter(fn: (r) => r.car == carFilter)\r\n    |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n    |> aggregateWindow(every: win, fn: last, createEmpty:false)\r\n    |> difference(nonNegative: false)\r\n    |> map(fn:(r)=>({ _time: r._time, delta_chg_kWh: if exists r._value then float(v:r._value) else 0.0 }))\r\n\r\nj1 = join(tables:{a: odo_delta, b: dis_delta}, on: [\"_time\"], method: \"inner\")\r\nj2 = join(tables:{a: j1,       b: chg_delta}, on: [\"_time\"], method: \"inner\")\r\n\r\nd =\r\n  j2\r\n    |> map(fn:(r)=>({\r\n      _time: r._time,\r\n      delta_odo_km:  r.delta_odo_km,\r\n      delta_net_kWh: r.delta_dis_kWh - r.delta_chg_kWh\r\n    }))\r\n    |> filter(fn:(r)=> not( (r.delta_net_kWh < 0.0) and (r.delta_odo_km <= odo_standstill_km) ))\r\n\r\ncons_only =\r\n  d\r\n    |> reduce(\r\n        identity:{dist:0.0, energy:0.0},\r\n        fn:(r,accumulator)=>({\r\n          dist:   accumulator.dist   + r.delta_odo_km,\r\n          energy: accumulator.energy + r.delta_net_kWh\r\n        })\r\n      )\r\n    |> map(fn:(r)=>({\r\n      _time: now(),\r\n      k: \"1\",\r\n      metric: \"consumption_kWh_100km\",\r\n      value: if r.dist <= 0.0 then 0.0 else math.round(x: (r.energy / r.dist) * 100.0 * 100.0)/100.0\r\n    }))\r\n\r\n// =================== STEP3 — Pivot, Remaining(calc) & Reichweiten ===================\r\nsafe =\r\n  union(tables:[step1, cons_only])\r\n    |> group(columns: [])\r\n    |> pivot(rowKey:[\"k\"], columnKey:[\"metric\"], valueColumn:\"value\")\r\n    |> map(fn:(r)=>({\r\n      _time: now(),\r\n      soc_pct:               if exists r.soc_pct               then float(v:r.soc_pct)               else 0.0,\r\n      soh_pct:               if exists r.soh_pct               then float(v:r.soh_pct)               else 0.0,\r\n      remaining_kWh_bms:     if exists r.remaining_kWh_bms     then float(v:r.remaining_kWh_bms)     else 0.0,\r\n      consumption_kWh_100km: if exists r.consumption_kWh_100km then float(v:r.consumption_kWh_100km) else 0.0\r\n    }))\r\n\r\nfinal_row =\r\n  safe\r\n    |> map(fn:(r)=>({\r\n      _time: r._time,\r\n      // Calculated Remaining = Kapazität * SoH * SoC\r\n      remaining_kWh_calc: (battery_capacity_kWh * (r.soh_pct/100.0)) * (r.soc_pct/100.0),\r\n      remaining_kWh_bms:  r.remaining_kWh_bms,\r\n      soc_pct:            r.soc_pct,\r\n      soh_pct:            r.soh_pct,\r\n      consumption_kWh_100km: r.consumption_kWh_100km\r\n    }))\r\n    |> map(fn:(r)=>({\r\n      _time: r._time,\r\n      consumption_kWh_100km: r.consumption_kWh_100km,\r\n      // Reichweite (calc) = Remaining(calc) / (Verbrauch/100)\r\n      range_km_est:\r\n        if r.consumption_kWh_100km <= 0.0 then 0.0\r\n        else math.round(x: (r.remaining_kWh_calc / (r.consumption_kWh_100km / 100.0)) * 10.0) / 10.0,\r\n      // Reichweite (BMS) = Remaining(BMS) / (Verbrauch/100)\r\n      range_km_est_bms:\r\n        if r.consumption_kWh_100km <= 0.0 then 0.0\r\n        else math.round(x: (r.remaining_kWh_bms  / (r.consumption_kWh_100km / 100.0)) * 10.0) / 10.0,\r\n      // Abweichung Remaining (kWh & %)\r\n      remaining_delta_kWh: r.remaining_kWh_calc - r.remaining_kWh_bms,\r\n      remaining_delta_pct: if r.remaining_kWh_calc > 0.0\r\n                           then ((r.remaining_kWh_bms / r.remaining_kWh_calc) - 1.0) * 100.0\r\n                           else 0.0,\r\n      remaining_kWh_calc: r.remaining_kWh_calc,\r\n      remaining_kWh_bms:  r.remaining_kWh_bms,\r\n      soc_pct:            r.soc_pct,\r\n      soh_pct:            r.soh_pct\r\n    }))\r\n    |> keep(columns:[\r\n      \"consumption_kWh_100km\",\r\n      \"range_km_est\",\r\n      \"range_km_est_bms\",\r\n      \"remaining_kWh_calc\",\r\n      \"remaining_kWh_bms\",\r\n      \"remaining_delta_kWh\",\r\n      \"remaining_delta_pct\",\r\n      \"soc_pct\",\r\n      \"soh_pct\",\r\n      \"_time\"\r\n    ])\r\n\r\nfinal_row \r\n  |> drop(columns: [\"range_km_est_bms\",\"remaining_delta_kWh\",\"remaining_delta_pct\",\"remaining_kWh_calc\"])\r\n  |> yield(name:\"LEAN_600km_dashboard\")\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Guess-o-Meter",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 93
+              },
+              {
+                "color": "green",
+                "value": 95
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": true,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nfrom(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] State of Health (%)\")\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "SoH",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.02
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.041
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^\\[BMS\\] Battery Cell Voltage Deviation \\(V\\) \\{car=\"Ioniq5_MY22\", ownership=\"dienstwagen\"\\}$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nfrom(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] Battery Cell Voltage Deviation (V)\")\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Max Cell Deviation",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 66,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Verbrauch"
+              },
+              {
+                "id": "unit",
+                "value": "kwatth"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 11,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.93,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "always",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "import \"strings\"\r\nimport \"regexp\"\r\n\r\nbucketName = \"carscanner_tagged\"\r\nmeasurementName = \"carscanner\"\r\ncarFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nodometerField = \"[DASH] Odometer (km)\"\r\ndischargedField = \"[BMS] Cumulative Energy Discharged (kWh)\"\r\nchargedField = \"[BMS] Cumulative Energy Charged (kWh)\"\r\n\r\nodometer = from(bucket: bucketName)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == measurementName)\r\n  |> filter(fn: (r) => r._field == odometerField)\r\n  |> filter(fn: (r) => exists r._value)\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> group(columns: [\"trip\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> reduce(\r\n    identity: {\r\n      trip: \"\",\r\n      odo_first: 0.0,\r\n      odo_last: 0.0,\r\n      trip_end_time: 1970-01-01T00:00:00Z\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      trip: r.trip,\r\n      odo_first: if accumulator.odo_first == 0.0 then r._value else accumulator.odo_first,\r\n      odo_last: r._value,\r\n      trip_end_time: r._time\r\n    })\r\n  )\r\n  |> map(fn: (r) => ({\r\n    trip: r.trip,\r\n    odo_first: r.odo_first,\r\n    odo_last: r.odo_last,\r\n    distance_km: r.odo_last - r.odo_first,\r\n    trip_end_time: r.trip_end_time\r\n  }))\r\n\r\ndischarged = from(bucket: bucketName)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == measurementName)\r\n  |> filter(fn: (r) => r._field == dischargedField)\r\n  |> filter(fn: (r) => exists r._value)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> group(columns: [\"trip\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> reduce(\r\n    identity: {\r\n      trip: \"\",\r\n      discharged_first: 0.0,\r\n      discharged_last: 0.0\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      trip: r.trip,\r\n      discharged_first: if accumulator.discharged_first == 0.0 then r._value else accumulator.discharged_first,\r\n      discharged_last: r._value\r\n    })\r\n  )\r\n  |> map(fn: (r) => ({\r\n    trip: r.trip,\r\n    discharged_delta_kWh: r.discharged_last - r.discharged_first\r\n  }))\r\n\r\ncharged = from(bucket: bucketName)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == measurementName)\r\n  |> filter(fn: (r) => r._field == chargedField)\r\n  |> filter(fn: (r) => exists r._value)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> group(columns: [\"trip\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> reduce(\r\n    identity: {\r\n      trip: \"\",\r\n      charged_first: 0.0,\r\n      charged_last: 0.0\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      trip: r.trip,\r\n      charged_first: if accumulator.charged_first == 0.0 then r._value else accumulator.charged_first,\r\n      charged_last: r._value\r\n    })\r\n  )\r\n  |> map(fn: (r) => ({\r\n    trip: r.trip,\r\n    charged_delta_kWh: r.charged_last - r.charged_first\r\n  }))\r\n\r\njoinStep1 = join(\r\n  tables: {odo: odometer, dis: discharged},\r\n  on: [\"trip\"]\r\n)\r\n\r\njoinStep2 = join(\r\n  tables: {step1: joinStep1, chg: charged},\r\n  on: [\"trip\"]\r\n)\r\n\r\njoinStep2\r\n  |> map(fn: (r) => {\r\n    netKwh = r.discharged_delta_kWh - r.charged_delta_kWh\r\n    consumption = if r.distance_km > 0.0 then (netKwh / r.distance_km) * 100.0 else 0.0\r\n    \r\n    tripShort = strings.substring(v: r.trip, start: 5, end: 16)\r\n    \r\n    return {\r\n      _time: r.trip_end_time,\r\n      _value: consumption,\r\n      trip: tripShort\r\n    }\r\n  })\r\n  |> filter(fn: (r) => r._value > 0.0)\r\n  |> group()\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Letzte Fahrten",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nfrom(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] Remaining energy (Wh)\")\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield(name: \"max\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Remaining Energy",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 89,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": 3600000,
+            "lineInterpolation": "stepBefore",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fahrzeugbeschleunigung (m/s²)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "m/s²"
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nfrom(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"carscanner\")\r\n  |> filter(fn: (r) => r._field == \"Geschwindigkeit (GPS) (km/h)\")\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield(name: \"max\")",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "hide": false,
+          "query": "from(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"carscanner\")\r\n  |> filter(fn: (r) => r._field == \"Fahrzeugbeschleunigung (m/s²)\")\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield(name: \"max\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Geschwindigkeit",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 9,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "[BMS] Remaining energy (Wh)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "kwatth"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nfrom(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] State of Charge Display (%)\")\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield(name: \"max\")",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "hide": false,
+          "query": "from(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] State of Charge BMS (%)\")\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield(name: \"max\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Batterie Ladestand",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.5,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": true,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\r\nownershipFilter = \"${ownership}\"\r\n\r\nfrom(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] Maximum Cell Voltage (V)\")\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield(name: \"max\")",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "hide": false,
+          "query": "from(bucket: \"carscanner_tagged\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] Minimum Cell Voltage (V)\")\r\n  |> drop(columns: [\"trip\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\r\n  |> yield(name: \"min\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Batterie Cell Voltage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "carFilter = \"${car}\"\nownershipFilter = \"${ownership}\"\n\nfrom(bucket: \"carscanner_tagged\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"carscanner\")\n  |> filter(fn: (r) => r[\"_field\"] == \"[BMS] Battery Cell Voltage Deviation (V)\")\n  |> filter(fn: (r) => r.car == carFilter)\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\n  |> drop(columns: [\"trip\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\n  |> yield(name: \"max\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Cell Deviation",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ff37a2veipkw0d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kWh/ 100km"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 29
+      },
+      "id": 13,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ff37a2veipkw0d"
+          },
+          "query": "import \"strings\"\r\nimport \"regexp\"\r\nimport \"date\"\r\n\r\nbucketName = \"carscanner_tagged\"\r\nmeasurementName = \"carscanner\"\r\ncarFilter = \"Ioniq5_MY22\"\r\nownershipFilter = \"dienstwagen\"\r\n\r\nodometerField = \"[DASH] Odometer (km)\"\r\ndischargedField = \"[BMS] Cumulative Energy Discharged (kWh)\"\r\nchargedField = \"[BMS] Cumulative Energy Charged (kWh)\"\r\n\r\nodometer = from(bucket: bucketName)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == measurementName)\r\n  |> filter(fn: (r) => r._field == odometerField)\r\n  |> filter(fn: (r) => exists r._value)\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> group(columns: [\"trip\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> reduce(\r\n    identity: {\r\n      trip: \"\",\r\n      odo_first: 0.0,\r\n      odo_last: 0.0,\r\n      trip_end_time: 1970-01-01T00:00:00Z\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      trip: r.trip,\r\n      odo_first: if accumulator.odo_first == 0.0 then r._value else accumulator.odo_first,\r\n      odo_last: r._value,\r\n      trip_end_time: r._time\r\n    })\r\n  )\r\n  |> map(fn: (r) => ({\r\n    trip: r.trip,\r\n    odo_first: r.odo_first,\r\n    odo_last: r.odo_last,\r\n    distance_km: r.odo_last - r.odo_first,\r\n    trip_end_time: r.trip_end_time\r\n  }))\r\n\r\ndischarged = from(bucket: bucketName)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == measurementName)\r\n  |> filter(fn: (r) => r._field == dischargedField)\r\n  |> filter(fn: (r) => exists r._value)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> group(columns: [\"trip\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> reduce(\r\n    identity: {\r\n      trip: \"\",\r\n      discharged_first: 0.0,\r\n      discharged_last: 0.0\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      trip: r.trip,\r\n      discharged_first: if accumulator.discharged_first == 0.0 then r._value else accumulator.discharged_first,\r\n      discharged_last: r._value\r\n    })\r\n  )\r\n  |> map(fn: (r) => ({\r\n    trip: r.trip,\r\n    discharged_delta_kWh: r.discharged_last - r.discharged_first\r\n  }))\r\n\r\ncharged = from(bucket: bucketName)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == measurementName)\r\n  |> filter(fn: (r) => r._field == chargedField)\r\n  |> filter(fn: (r) => exists r._value)\r\n  |> filter(fn: (r) => r.ownership == ownershipFilter)\r\n  |> filter(fn: (r) => r.car == carFilter)\r\n  |> group(columns: [\"trip\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> reduce(\r\n    identity: {\r\n      trip: \"\",\r\n      charged_first: 0.0,\r\n      charged_last: 0.0\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      trip: r.trip,\r\n      charged_first: if accumulator.charged_first == 0.0 then r._value else accumulator.charged_first,\r\n      charged_last: r._value\r\n    })\r\n  )\r\n  |> map(fn: (r) => ({\r\n    trip: r.trip,\r\n    charged_delta_kWh: r.charged_last - r.charged_first\r\n  }))\r\n\r\njoinStep1 = join(\r\n  tables: {odo: odometer, dis: discharged},\r\n  on: [\"trip\"]\r\n)\r\n\r\njoinStep2 = join(\r\n  tables: {step1: joinStep1, chg: charged},\r\n  on: [\"trip\"]\r\n)\r\n\r\n// Trip-Verbrauch berechnen und dann pro Kalendermonat mitteln\r\nmonthly = joinStep2\r\n  |> map(fn: (r) => {\r\n    netKwh = r.discharged_delta_kWh - r.charged_delta_kWh\r\n    consumption = if r.distance_km > 0.0 then (netKwh / r.distance_km) * 100.0 else 0.0\r\n\r\n    tripShort = strings.substring(v: r.trip, start: 5, end: 16)\r\n\r\n    return {\r\n      _time: r.trip_end_time,\r\n      _value: consumption,\r\n      trip: tripShort\r\n    }\r\n  })\r\n  |> filter(fn: (r) => r._value > 0.0)\r\n  // Jahr und Monat aus _time ziehen\r\n  |> map(fn: (r) => ({\r\n    r with\r\n    year:  date.year(t: r._time),\r\n    month: date.month(t: r._time)\r\n  }))\r\n  // pro Jahr+Monat zusammenfassen\r\n  |> group(columns: [\"year\", \"month\"])\r\n  |> reduce(\r\n    identity: {\r\n      year: 0,\r\n      month: 0,\r\n      sum: 0.0,\r\n      count: 0.0\r\n    },\r\n    fn: (r, accumulator) => ({\r\n      year:  r.year,\r\n      month: r.month,\r\n      sum:   accumulator.sum + r._value,\r\n      count: accumulator.count + 1.0\r\n    })\r\n  )\r\n  // Durchschnitt berechnen und _time auf den 1. des Monats setzen\r\n  |> map(fn: (r) => ({\r\n    _time: time(\r\n      v: string(v: r.year) +\r\n        \"-\" +\r\n        (if r.month < 10 then \"0\" + string(v: r.month) else string(v: r.month)) +\r\n        \"-01T00:00:00Z\"\r\n    ),\r\n    _value: r.sum / r.count\r\n  }))\r\n  // nur Zeit + Wert zurückgeben, keine Labels mehr\r\n  |> keep(columns: [\"_time\", \"_value\"])\r\n  // alles wieder zu **einer** Serie zusammenfassen\r\n  |> group()\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n\r\nmonthly\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Monatsverbrauch",
+      "type": "barchart"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "Ioniq5_MY22",
+          "value": "Ioniq5_MY22"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "ff37a2veipkw0d"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: \"carscanner_tagged\",\r\n  tag: \"car\",\r\n  predicate: (r) => r._measurement == \"carscanner\"\r\n)\r\n",
+        "includeAll": true,
+        "name": "car",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: \"carscanner_tagged\",\r\n  tag: \"car\",\r\n  predicate: (r) => r._measurement == \"carscanner\"\r\n)\r\n"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "dienstwagen",
+          "value": "dienstwagen"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "ff37a2veipkw0d"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: \"carscanner_tagged\",\r\n  tag: \"ownership\",\r\n  predicate: (r) => r._measurement == \"carscanner\"\r\n)",
+        "includeAll": true,
+        "name": "ownership",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: \"carscanner_tagged\",\r\n  tag: \"ownership\",\r\n  predicate: (r) => r._measurement == \"carscanner\"\r\n)"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Ioniq 5 tagged",
+  "uid": "adrj22t",
+  "version": 14
+}
