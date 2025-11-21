@@ -1,0 +1,25 @@
+### Query 1 - Speed
+
+carFilter = "${car}"
+ownershipFilter = "${ownership}"
+
+from(bucket: "carscanner_tagged")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == "carscanner")
+  |> filter(fn: (r) => r._field == "Geschwindigkeit (GPS) (km/h)")
+  |> filter(fn: (r) => r.car == carFilter)
+  |> filter(fn: (r) => r.ownership == ownershipFilter)
+  |> drop(columns: ["trip"])
+  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)
+  |> yield(name: "max")
+
+
+### Query 2 - Acceleration
+
+from(bucket: "carscanner_tagged")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == "carscanner")
+  |> filter(fn: (r) => r._field == "Fahrzeugbeschleunigung (m/s²)")
+  |> drop(columns: ["trip"])
+  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)
+  |> yield(name: "max")
