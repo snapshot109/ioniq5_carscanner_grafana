@@ -19,7 +19,7 @@ Ich bin kein Developer. Die hier beschriebene Lösung war nur mit Unterstützung
 * Nach einer Fahrt (oder irgendwann wenn ich Zeit habe), exportiere ich die CSVs der Fahrtaufzeichnung ("CSV #2" in Carscanner Export) aus der App und speichere sie direkt auf mein Synology NAS (via DS File App von Synology)
 * Mein Carscanner Dash sieht wie folgt aus:
 
-![Demo Screenshot meine Carscanner Dashboard](/assets/images/Carscanner_Dash.jpg)
+![Demo Screenshot meine Carscanner Dashboard](/../main/assets/images/Carscanner_Dash.jpg)
 
 * Das Dashboard enthält vor allem so viele Daten, damit in der Aufzeichnung alles vorhanden ist, was ich am Ende auswerten will
 * Dieses Dashboard ergibt ein CSV File mit diesen Daten
